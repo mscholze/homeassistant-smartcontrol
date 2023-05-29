@@ -1,9 +1,9 @@
 {
   "domain": "smart_control",
   "name": "Smart Control",
-  "documentation": "https://example.com/smart_control",
+  "documentation": "https://github.com/tobit6795/homeassistant-smartcontrol",
   "dependencies": [],
   "requirements": ["aiohttp"],
-  "codeowners": [],
+  "codeowners": ["@tobit6795"],
   "version": "1.0"
 }
