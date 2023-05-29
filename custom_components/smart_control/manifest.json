@@ -1,0 +1,9 @@
+{
+  "domain": "smart_control",
+  "name": "Smart Control",
+  "documentation": "https://example.com/smart_control",
+  "dependencies": [],
+  "requirements": ["aiohttp"],
+  "codeowners": [],
+  "version": "1.0"
+}
