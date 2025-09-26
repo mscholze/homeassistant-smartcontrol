@@ -1,21 +1,27 @@
 """Platform for sensor integration."""
 from __future__ import annotations
 
+from datetime import timedelta
+from typing import Any
+
 from homeassistant.components.sensor import (
+    SensorDeviceClass,
     SensorEntity,
-    STATE_CLASS_TOTAL_INCREASING,
-    DEVICE_CLASS_ENERGY,
+    SensorStateClass,
 )
-from homeassistant.const import ENERGY_KILO_WATT_HOUR, POWER_WATT
-from homeassistant.core import HomeAssistant
-from homeassistant.helpers.entity_platform import AddEntitiesCallback
-from homeassistant.helpers.typing import ConfigType, DiscoveryInfoType
+from homeassistant.const import UnitOfEnergy, UnitOfPower
+from homeassistant.helpers.entity import DeviceInfo
+
 from .smart_control_api import get_token, get_watts, get_kWh, write_to_file
 
 import asyncio
 import logging
 
 _LOGGER = logging.getLogger(__name__)
+
+def write2file(*_args, **_kwargs):
+    """Disabled debug file writer – does nothing."""
+    return
 
 async def async_setup_platform(
     hass: HomeAssistant,
@@ -37,9 +43,9 @@ class SmartControlEnergyConsumptionTotalSensor(SensorEntity):
     """Representation of a Smart Control Energy Consumption Total Sensor."""
 
     _attr_name = "Smart Control Energy Consumption Total"
-    _attr_unit_of_measurement = ENERGY_KILO_WATT_HOUR
-    _attr_device_class = DEVICE_CLASS_ENERGY
-    _attr_state_class = STATE_CLASS_TOTAL_INCREASING
+    _attr_native_unit_of_measurement = UnitOfEnergy.KILO_WATT_HOUR
+    _attr_device_class = SensorDeviceClass.ENERGY
+    _attr_state_class = SensorStateClass.TOTAL_INCREASING
 
     def __init__(self, username: str, password: str) -> None:
         self._username = username
@@ -74,7 +80,7 @@ class SmartControlEnergyConsumptionTotalSensor(SensorEntity):
 class SmartControlPowerConsumptionSensor(SensorEntity):
     """Representation of a Smart Control Power Consumption Sensor."""
     _attr_name = "Smart Control Power Consumption"
-    _attr_unit_of_measurement = POWER_WATT
+    _attr_native_unit_of_measurement = UnitOfPower.WATT
 
     def __init__(self, username: str, password: str) -> None:
         self._username = username
